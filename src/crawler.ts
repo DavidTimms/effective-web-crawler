@@ -4,17 +4,23 @@ import fetch from "node-fetch";
 import { isInstanceOf, parseUrl, printLine, repeatString } from "./utils";
 import { WebPage } from "./webPage";
 
+export interface CrawlerOptions {
+  maxDepth: number;
+}
+
 export class Crawler {
   readonly maxDepth: number;
 
-  constructor(options: { maxDepth: number }) {
+  constructor(options: CrawlerOptions) {
     this.maxDepth = options.maxDepth;
   }
 
-  crawl(startingUrl: string): IO<WebPage> {
-    return this.parseStartingUrl(startingUrl).andThen((url) =>
-      this.crawlPage(url)
-    );
+  crawl(startingUrl: string): IO<WebPage, Error> {
+    return this.parseStartingUrl(startingUrl)
+      .andThen((url) => this.crawlPage(url))
+      .mapError((thrown) =>
+        thrown instanceof Error ? thrown : Error(String(thrown))
+      );
   }
 
   private parseStartingUrl(startingUrl: string): IO<URL, Error> {
