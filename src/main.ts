@@ -1,20 +1,10 @@
-import IO from "effective/src/io";
+import IO from "effective";
 import { Crawler, CrawlerOptions } from "./crawler";
 import { ExitCode, printError, script } from "./utils";
 
 const DEFAULT_OPTIONS: CrawlerOptions = {
   maxDepth: 2,
 };
-
-script((startingUrl: string | undefined, ...args) =>
-  startingUrl
-    ? new Crawler({
-        maxDepth: 2,
-      })
-        .crawl(startingUrl)
-        .as(ExitCode.Ok)
-    : printError("ERROR: No starting URL provided").as(ExitCode.Error)
-);
 
 script((...args) =>
   parseScriptArguments(args)

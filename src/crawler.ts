@@ -1,4 +1,4 @@
-import IO from "effective/src/io";
+import IO from "effective";
 import { URL } from "url";
 import fetch from "node-fetch";
 import { isInstanceOf, parseUrl, printLine, repeatString } from "./utils";

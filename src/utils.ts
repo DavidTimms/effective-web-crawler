@@ -1,5 +1,5 @@
 import { URL } from "url";
-import IO from "effective/src/io";
+import IO from "effective";
 
 export enum ExitCode {
   Ok = 0,
