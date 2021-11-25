@@ -1,4 +1,4 @@
-import IO from "effective";
+import IO from "effective.ts";
 import { URL } from "url";
 import fetch from "node-fetch";
 import { isInstanceOf, parseUrl, printLine, repeatString } from "./utils";

@@ -1,5 +1,5 @@
 import { URL } from "url";
-import IO from "effective";
+import IO from "effective.ts";
 
 export enum ExitCode {
   Ok = 0,
