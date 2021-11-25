@@ -11,7 +11,7 @@ script((...args) =>
     .andThen(({ startingUrl, options }) =>
       new Crawler(options).crawl(startingUrl).as(ExitCode.Ok)
     )
-    .catch((error) => printError(`ERROR: ${error}`).as(ExitCode.Error))
+    .catch((error) => printError(`ERROR: ${error.message}`).as(ExitCode.Error))
 );
 
 function parseScriptArguments(

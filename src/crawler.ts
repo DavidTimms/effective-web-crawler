@@ -32,20 +32,18 @@ export class Crawler {
   private crawlPage(pageUrl: URL, depth = 0): IO<WebPage> {
     return this.fetchPageText(pageUrl)
       .map((html) => WebPage.fromHtml(pageUrl, html))
-      .andThen((page) =>
+      .through((page) =>
         printLine(
           repeatString(" ", depth) + "- " + (page.title ?? "(no title)")
-        )
-          .andThen(() =>
-            depth < this.maxDepth
-              ? IO.parallel(
-                  this.crawlableLinks(page).map((url) =>
-                    this.crawlPage(url, depth + 1).mapError(() => null)
-                  )
+        ).andThen(() =>
+          depth < this.maxDepth
+            ? IO.parallel(
+                this.crawlableLinks(page).map((url) =>
+                  this.crawlPage(url, depth + 1).catch(() => IO.void)
                 )
-              : IO.wrap([])
-          )
-          .as(page)
+              )
+            : IO.wrap([])
+        )
       );
   }
 
